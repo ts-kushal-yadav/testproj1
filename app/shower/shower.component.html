@@ -2,14 +2,14 @@
 <div *ngIf="flag==1">
 <p></p>
 <!-- <div>All posts?</div> -->
-<div class="d-flex justify-content-end"><a class="btn btn-primary" (click)="flag=0" >Add post</a></div>
+<div class="d-flex justify-content-end"><a class="btn btn-primary mr-1" (click)="flag=0" >Add post</a></div>
 <p></p>
 <div *ngFor = "let post of postlist">
     <mat-accordion>
         <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{post.id}}.
+              <!-- {{post.id}}. -->
             </mat-panel-title>
             <mat-panel-description>
               <b>Title</b> : {{post.title}}
@@ -32,11 +32,56 @@
       </mat-accordion>
       <p></p>
 </div>
+<div *ngFor = "let post of onlineposts">
+  <mat-accordion>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <!-- {{post.id}}. -->
+          </mat-panel-title>
+          <mat-panel-description>
+            <b>Title</b> : {{post.title}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>This is the primary content of the panel.</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="this.panelOpenState = true"
+                           (closed)="this.panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Body - 
+          </mat-panel-title>
+          <mat-panel-description *ngIf="this.panelOpenState==false">
+            {{post.body.slice(0,30)}}...
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>{{post.body}}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <p></p>
 </div>
+</div>
+<!-- <div>
+  <h1>Posts ({{ onlineposts.length }})</h1>
 
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th>Title</th>
+              <th>Body</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let post of onlineposts">
+              <td>{{ post.title }}</td>
+              <td>{{ post.body }}</td>
+          </tr>
+      </tbody>
+  </table>
+</div> -->
 <div *ngIf="flag==0">
     <p></p>
-    <div class="d-flex justify-content-end"><a class="btn btn-danger" (click)="flag=1" >Go Back</a></div>
+    <div class="d-flex justify-content-end"><a class="btn btn-danger mr-1" (click)="flag=1" >Go Back</a></div>
     <!-- <span>Title : <input type="text" #title id=title></span>
     <p></p>
     <span>Body : <input type="text" #title id=title></span> -->
@@ -44,12 +89,14 @@
   
         <label>
           Title:
-          <input type="text" #title formControlName="title">
+          <p></p>
+          <input type="text" #title formControlName="title" style="height:30px;width:500px">
         </label>
       <p></p>
         <label>
           Body:
-          <input type="text" #body formControlName="body" style="height:100px;width:250px">
+          <p></p>
+          <input type="text" #body formControlName="body" style="height:100px;width:500px">
         </label>
         <p></p>
         <button type="submit" [disabled]="!profileForm.valid" class = "btn btn-success" (click)="addpost(title.value, body.value)">Submit</button>
